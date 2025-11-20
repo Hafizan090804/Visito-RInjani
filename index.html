@@ -1,62 +1,105 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Sederhana</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard Pariwisata - Gunung Rinjani</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
-<body>
-    <header>
-        <h1>GUNUNG RINJANI</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Beranda</a></li>
-                <li><a href="#">Layanan</a></li>
-                <li><a href="#">Tentang</a></li>
-                <li><a href="https://www.instagram.com/accounts/onetap/?next=%2F">Kontak</a></li>
-            </ul>
-        </nav>
-    </header>
+<body data-theme="light">
+  <header>
+    <div class="header-left">
+      <img src="profile.jpg" alt="logo" class="logo" onerror="this.style.display='none'">
+      <h1>Dashboard Pariwisata — Gunung Rinjani</h1>
+    </div>
+    <div class="header-actions">
+      <div class="kicker">Status: <span class="pill">Online</span></div>
+      <button id="themeBtn" class="theme-toggle">Mode Gelap</button>
+    </div>
+  </header>
 
-    <main>
-        <div id="content">
-            <article>
-                <h2>Belajar HTML & CSS</h2>
-                <img src="image/Mount Rinjani or Gunung Rinjani is an active volcano in Indonesia on the island of Lombok_.jpeg" alt="Gambar Artikel 1">
-                <p> Gunung Rinjani adalah gunung berapi aktif yang terletak di Pulau Lombok, Nusa Tenggara Barat. Dengan ketinggian mencapai 3.726 meter di atas permukaan laut, Rinjani menjadi gunung tertinggi kedua di Indonesia. Daya tarik utamanya adalah Danau Segara Anak yang terletak di kaldera gunung, serta pemandangan alam yang spektakuler di sepanjang jalur pendakian. Setiap tahun, ribuan pendaki dari dalam dan luar negeri datang untuk menikmati keindahan dan tantangan yang ditawarkan gunung ini.
-                    
-                </p>
-                
-            </article>
+  <div class="container">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="profile.jpg" alt="profile" onerror="this.style.display='none'">
+        <div>
+          <strong>Hafizan</strong>
+          <div class="muted small">Pengelola / Pelajar</div>
+        </div>
+      </div>
 
-            <article>
-                <h2>Mengenal Flexbox</h2>
-                <img src="image/Gunung Rinjani,.jpeg" alt="Gambar Artikel 2">
-                <p>Selain sebagai destinasi wisata alam, Gunung Rinjani juga memiliki nilai spiritual dan budaya yang penting bagi masyarakat sekitar, terutama suku Sasak dan masyarakat Hindu Bali. Banyak warga yang menganggap kawasan ini sebagai tempat suci, dan secara rutin mengadakan ritual keagamaan di Danau Segara Anak. Di antaranya adalah upacara Pekelan yang bertujuan untuk menyucikan diri dan memohon keselamatan. Oleh karena itu, para pendaki dihimbau untuk tidak hanya menjaga kebersihan lingkungan, tetapi juga menghormati kearifan lokal yang berlaku di wilayah tersebut. Dengan cara ini, keindahan dan kesakralan Gunung Rinjani dapat terus dinikmati oleh generasi mendatang.</p>
-             
-            </article>
+      <nav>
+        <ul>
+          <li class="active" data-section="dashboard">Beranda</li>
+          <li data-section="stats">Statistik Pengunjung</li>
+          <li data-section="weather">Cuaca</li>
+          <li data-section="map">Peta Wisata</li>
+          <li data-section="services">Layanan</li>
+          <li data-section="about">Tentang</li>
+        </ul>
+      </nav>
+
+      <hr>
+      <div class="muted small">Lokasi</div>
+      <div class="location-label">Lombok — Nusa Tenggara Barat</div>
+    </aside>
+
+    <main class="main">
+      <div class="cards">
+        <div class="card"><div class="label">Total Kunjungan Bulan Ini</div><div class="value" id="totalVisits">—</div><div class="kicker">Periode: Nov 2025</div></div>
+        <div class="card"><div class="label">Rata-rata Harian</div><div class="value" id="avgDaily">—</div><div class="kicker">7 hari terakhir</div></div>
+        <div class="card"><div class="label">Cuaca Saat Ini</div><div class="value" id="currentWeather">—</div><div class="kicker">Suhu | Kondisi</div></div>
+        <div class="card"><div class="label">Rating Wisata</div><div class="value">4.8 / 5</div><div class="kicker">Berdasarkan ulasan</div></div>
+      </div>
+
+      <div class="widgets">
+        <div class="chart-card">
+          <div class="widget-header">
+            <div><strong>Grafik Kunjungan Harian</strong><div class="muted small">30 hari terakhir</div></div>
+            <div class="muted small">Sumber: Data simulasi</div>
+          </div>
+          <canvas id="visitorsChart"></canvas>
         </div>
 
-        <aside>
-      <h3>Profil</h3>
-      <img src="image/profile.jpg" alt="Foto Profil" />
-      <p>Nama: Hafizan <br>Usia: 20 tahun<br>Asal: NTB</p>
-      
-            <h3>Tentang Penulis</h3>
-            <p>Saya adalah seorang pelajar yang sedang belajar membuat website menggunakan HTML dan CSS. Website ini dibuat setulus hati.</p>
+        <div class="map-card">
+          <div class="widget-header">
+            <div><strong>Peta Lokasi</strong><div class="muted small">Gunung Rinjani</div></div>
+            <div class="muted small">Koordinat: -8.3405, 116.4558</div>
+          </div>
+          <div id="map"></div>
+        </div>
+      </div>
 
-            <h3>Kategori</h3>
-            <ul>
-                <li><a href="#">HTML Dasar</a></li>
-                <li><a href="#">CSS Styling</a></li>
-                <li><a href="#">Desain Responsif</a></li>
-            </ul>
-        </aside>
+      <div class="info">
+        <div class="info-card">
+          <strong>Informasi Singkat</strong>
+          <p class="muted small mt8">Harga tiket, jam operasional, dan jalur pendakian.</p>
+          <ul class="mt8">
+            <li>Tiket masuk: Rp 10.000 - Rp 50.000</li>
+            <li>Jam operasional: 06:00 - 18:00</li>
+            <li>Jalur populer: Sembalun, Senaru</li>
+            <li>Fasilitas: Pos pendakian, camping site</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <strong>Layanan & Kontak</strong>
+          <p class="muted small mt8">Kontak pemandu lokal dan layanan kebersihan.</p>
+          <ol class="mt8">
+            <li>Pemandu resmi: +62 812-xxxx-xxxx</li>
+            <li>Layanan darurat: Posko Taman Nasional</li>
+            <li>Email: info@rinjani.example</li>
+          </ol>
+        </div>
+      </div>
     </main>
+  </div>
 
-    <footer>
-        <p>&copy; 2025 Website Saya. Dibuat dengan ❤️ oleh Hafiz.</p>
-    </footer>
+  <footer>&copy; 2025 Dashboard Pariwisata — Dibuat oleh Hafizan</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
