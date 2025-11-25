@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api/visitors";
+const API_URL = "http://localhost:5300/api/visitors";
 
 // ------ GET DATA ------
 async function fetchVisitors() {
