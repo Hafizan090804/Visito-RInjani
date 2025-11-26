@@ -11,5 +11,5 @@ app.use(express.json());
 
 app.use("/api/visitors", visitorsRouter);
 
-const PORT = process.env.PORT || 5300;
+const PORT = process.env.PORT || 5500;
 app.listen(PORT, () => console.log("Server running on port", PORT));
