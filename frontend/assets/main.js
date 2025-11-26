@@ -1,38 +1,45 @@
-const API_URL = "http://localhost:5300/api/visitors";
+const API_URL = "http://127.0.0.1:5300/api/visitors";
 
 // ------ GET DATA ------
 async function fetchVisitors() {
-    const res = await fetch(API_URL);
-    return await res.json();
+  const res = await fetch(API_URL);
+  return await res.json();
 }
 
 // ------ TAMPILKAN DI INDEX ------
 async function loadDashboard() {
-    if (!document.getElementById("totalVisits")) return;
+  if (!document.getElementById("totalVisits")) return;
 
-    const data = await fetchVisitors();
+  const data = await fetchVisitors();
 
-    const totalVisits = data.reduce((a, b) => a + b.jumlah, 0);
-    const last = data[data.length - 1];
+  const totalVisits = data.reduce((a, b) => a + b.jumlah, 0);
+  const last = data[data.length - 1];
 
-    document.getElementById("totalVisits").textContent = totalVisits.toLocaleString();
-    document.getElementById("avgDaily").textContent = Math.round(totalVisits / data.length);
-    document.getElementById("currentWeather").textContent = `${last.cuaca} - ${last.suhu}°C`;
+  document.getElementById("totalVisits").textContent =
+    totalVisits.toLocaleString();
+  document.getElementById("avgDaily").textContent = Math.round(
+    totalVisits / data.length
+  );
+  document.getElementById(
+    "currentWeather"
+  ).textContent = `${last.cuaca} - ${last.suhu}°C`;
 
-    const labels = data.map(x => x.tanggal);
-    const visitors = data.map(x => x.jumlah);
+  const labels = data.map((x) => x.tanggal);
+  const visitors = data.map((x) => x.jumlah);
 
-    renderChart(labels, visitors);
-    initMap();
+  renderChart(labels, visitors);
+  initMap();
 }
 
 // ------ TAMPILKAN DI TABEL ------
 async function loadTable() {
-    const tbody = document.querySelector("#tableData tbody");
-    if (!tbody) return;
+  const tbody = document.querySelector("#tableData tbody");
+  if (!tbody) return;
 
-    const data = await fetchVisitors();
-    tbody.innerHTML = data.map(r =>
+  const data = await fetchVisitors();
+  tbody.innerHTML = data
+    .map(
+      (r) =>
         `<tr>
             <td>${r.id}</td>
             <td>${r.tanggal}</td>
@@ -40,34 +47,36 @@ async function loadTable() {
             <td>${r.cuaca}</td>
             <td>${r.suhu}</td>
          </tr>`
-    ).join("");
+    )
+    .join("");
 }
 
 // ------ INSERT DATA ------
 async function handleAddForm() {
-    const form = document.getElementById("addForm");
-    if (!form) return;
+  const form = document.getElementById("addForm");
+  if (!form) return;
 
-    form.addEventListener("submit", async e => {
-        e.preventDefault();
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-        const payload = {
-            tanggal: document.getElementById("tanggal").value,
-            jumlah: +document.getElementById("jumlah").value,
-            cuaca: document.getElementById("cuaca").value,
-            suhu: +document.getElementById("suhu").value
-        };
+    const payload = {
+      tanggal: document.getElementById("tanggal").value,
+      jumlah: +document.getElementById("jumlah").value,
+      cuaca: document.getElementById("cuaca").value,
+      suhu: +document.getElementById("suhu").value,
+    };
 
-        const res = await fetch(API_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-        });
-
-        const out = await res.json();
-        document.getElementById("msg").innerText =
-            out.error ? "Gagal: " + out.error : "Data berhasil ditambahkan!";
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
     });
+
+    const out = await res.json();
+    document.getElementById("msg").innerText = out.error
+      ? "Gagal: " + out.error
+      : "Data berhasil ditambahkan!";
+  });
 }
 
 loadDashboard();
