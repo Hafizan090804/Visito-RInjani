@@ -11,7 +11,7 @@
 }
 body {
   font-family: Inter, system-ui;
-  background: url("assets/image/Rinjani.jpeg") center/cover fixed no-repeat;
+  background: url("assets/image/rinjani.jpeg") center/cover fixed no-repeat;
   color: #071424;
   min-height: 100vh;
 }
